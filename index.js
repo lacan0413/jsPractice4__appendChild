@@ -1,47 +1,44 @@
+// @flow
 function addInputField() {
-    var parent = document.getElementById("book").parentNode;
+    let parent = document.getElementById("book").parentNode;
 
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         parent.appendChild(document.createElement("br"));
         parent.appendChild(document.createTextNode("書名: "));
         parent.appendChild(document.createElement("input"));
     }
 }
-
+/////////////////////////////////////////////////////////////////////
 function addBook() {
-    var inputs = document.getElementsByTagName("input");
-    var len = inputs.length;
-    var list = document.getElementById("list");
-    var counter = 0;
+    let inputs = document.getElementsByTagName("input");
+    let len = inputs.length;
+    let list = document.getElementById("list");
+    let counter = 0;
 
-    for (var i = 0; i < len; i++) {
-        if (inputs[i].value != "") {
-            var txtNode = document.createTextNode(inputs[i].value);
-            var li = document.createElement("li");
-            li.appendChild(txtNode);
-            list.appendChild(li);
+    if (list.children.length < 5) {
+        for (let i = 0; i < len; i++) {
+            if (inputs[i].value !== "") {
+                let txtNode = document.createTextNode(inputs[i].value);
+                let li = document.createElement("li");
+                li.appendChild(txtNode);
 
-            counter++;
-            inputs[i].value = "";
+                if (list.children.length < 5) {
+                    list.appendChild(li);
+                } else {
+                    alert('單次新增書本數已超過總數五本')
+                }
+
+                counter++;
+                inputs[i].value = "";
+            }
         }
-    }
 
-    if (counter == 0) {
-        alert("請先輸入書名");
-    }
-
-    if (list.children.length < 6) {
-        document.getElementById("bookCount").innerHTML = list.children.length;
-    }
-    else {
+        if (counter === 0) {
+            alert("請先輸入書名");
+        } else if (list.children.length) {
+            document.getElementById("bookCount").innerHTML = list.children.length;
+        }
+    } else {
         alert("最多新增5本書");
     }
-
-    //4個li之後，再input 2個，總數會固定在4
-
-    // if (list.children.length > 5) {
-    //     var mlist = document.getElementById("list")
-    //     var dlist = mlist.querySelectorAll("mlist[4] ~ li");
-    //     dlist.innerHTML = "";
-
 }
